@@ -44,6 +44,7 @@ function yourls_html_head( $context = 'index', $title = '' ) {
 
 		case 'index':
 			$insert = $tablesorter = $cal = $share = true;
+			$_title_page = 'Administration homepage';
 			break;
 
 		case 'plugins':
