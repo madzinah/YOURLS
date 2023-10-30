@@ -139,17 +139,8 @@ tr.edit-row  input.short {
 td.url small a{
 	color:#bbc;
 }
-body.desktop td.actions input,body.desktop  td.actions a {
-	visibility:hidden;
-}
 td.timestamp span.timestamp {
     display:none;
-}
-td.actions input.disabled, td.actions input.loading {
-	visibility:visible;
-}
-tr:hover td.actions input, tr:hover td.actions a {
-	visibility:visible;
 }
 td.actions .button {
 	font-family: Verdana, Arial;
