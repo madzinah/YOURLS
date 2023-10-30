@@ -43,11 +43,19 @@ div.share {
 #charcount.negative {
 	color:red;
 }
-#share_links a {
+#sharebox ul {
+	display: inline-block;
+	list-style-type: none;
+	padding-inline-start: 0px;
+}
+#sharebox li, #share_links {
+	display: inline-block;
+}
+#sharebox a {
 	padding:0 12px 0 18px;
 	font-weight:bold
 }
-#share_links a:hover {
+#sharebox a:hover {
 	background-position:2px center;
 }
 #share_tw {background:transparent url(../images/twitter.svg) left center no-repeat;}

@@ -239,9 +239,13 @@ yourls_html_logo();
 yourls_html_menu() ;
 
 yourls_do_action( 'admin_page_before_content' );
-
+?>
+	<main role="main"> 
+<?php
 if ( !$is_bookmark ) { ?>
-	<p><?php echo $search_sentence; ?></p>
+	<?php if($search_sentence): ?>
+		<p><?php echo $search_sentence; ?></p>
+	<?php endif; ?>	
 	<p><?php
 		printf( yourls__( 'Display <strong>%1$s</strong> to <strong class="increment">%2$s</strong> of <strong class="increment">%3$s</strong> URLs' ), $display_on_page, $max_on_page, $total_items );
 		if( $total_items_clicks !== false )

@@ -186,7 +186,6 @@ function yourls_html_addnew( $url = '', $keyword = '' ) {
         return $pre;
     }
 	?>
-	<main role="main">
 	<div id="new_url">
 		<div>
 			<form id="new_url_form" action="" method="get">
@@ -326,9 +325,10 @@ function yourls_html_tfooter( $params = array() ) {
 			?>
 
 			<div id="pagination">
-				<span class="navigation">
+				<nav role="navigation" aria-label="pagination" class="navigation">
 				<?php if( $total_pages > 1 ) { ?>
-					<span class="nav_total"><?php echo sprintf( yourls_n( '1 page', '%s pages', $total_pages ), $total_pages ); ?></span>
+					<p class="nav_total"><?php echo sprintf( yourls_n( '1 page', '%s pages', $total_pages ), $total_pages ); ?></p>
+					<ul>
 					<?php
 					$base_page = yourls_admin_url( 'index.php' );
 					// Pagination offsets: min( max ( zomg! ) );
@@ -336,25 +336,26 @@ function yourls_html_tfooter( $params = array() ) {
 					$p_end = min( max( 5, $page + 2 ), $total_pages );
 					if( $p_start >= 2 ) {
 						$link = yourls_add_query_arg( array_merge( $params, array( 'page' => 1 ) ), $base_page );
-						echo '<span class="nav_link nav_first"><a href="' . $link . '" title="' . yourls_esc_attr__('Go to First Page') . '">' . yourls__( '&laquo; First' ) . '</a></span>';
-						echo '<span class="nav_link nav_prev"></span>';
+						echo '<li class="nav_link nav_first"><a href="' . $link . '" title="' . yourls_esc_attr__('Go to First Page') . '">' . yourls__( '&laquo; First' ) . '</a></li>';
+						echo '<li class="nav_link nav_prev"></li>';
 					}
 					for( $i = $p_start ; $i <= $p_end; $i++ ) {
 						if( $i == $page ) {
-							echo "<span class='nav_link nav_current'>$i</span>";
+							echo "<li class='nav_link nav_current'>$i</li>";
 						} else {
 							$link = yourls_add_query_arg( array_merge( $params, array( 'page' => $i ) ), $base_page );
-							echo '<span class="nav_link nav_goto"><a href="' . $link . '" title="' . sprintf( yourls_esc_attr( 'Page %s' ), $i ) .'">'.$i.'</a></span>';
+							echo '<li class="nav_link nav_goto"><a href="' . $link . '" title="' . sprintf( yourls_esc_attr( 'Page %s' ), $i ) .'">'.$i.'</a></li>';
 						}
 					}
 					if( ( $p_end ) < $total_pages ) {
 						$link = yourls_add_query_arg( array_merge( $params, array( 'page' => $total_pages ) ), $base_page );
-						echo '<span class="nav_link nav_next"></span>';
-						echo '<span class="nav_link nav_last"><a href="' . $link . '" title="' . yourls_esc_attr__('Go to Last Page') . '">' . yourls__( 'Last &raquo;' ) . '</a></span>';
+						echo '<li class="nav_link nav_next"></li>';
+						echo '<li class="nav_link nav_last"><a href="' . $link . '" title="' . yourls_esc_attr__('Go to Last Page') . '">' . yourls__( 'Last &raquo;' ) . '</a></span>';
 					}
 					?>
+					</ul>
 				<?php } ?>
-				</span>
+				</nav>
 			</div>
 			</th>
 		</tr>
@@ -456,18 +457,17 @@ function yourls_share_box( $longurl, $shorturl, $title = '', $text='', $shortlin
 				<span id="charcount" class="hide-if-no-js"><?php echo $count; ?></span>
 				<textarea id="tweet_body"><?php echo $share; ?></textarea>
 			</div>
-			<p id="share_links"><?php yourls_e( 'Share with' ); ?>
-				<a id="share_tw" href="https://twitter.com/intent/tweet?text=<?php echo $_share; ?>" title="<?php yourls_e( 'Tweet this!' ); ?>" onclick="share('tw');return false">Twitter</a>
-				<a id="share_fb" href="https://www.facebook.com/share.php?u=<?php echo $_url; ?>" title="<?php yourls_e( 'Share on Facebook' ); ?>" onclick="share('fb');return false;">Facebook</a>
+			<p id="share_links"><?php yourls_e( 'Share with' ); ?></p>
+				<ul>
+					<li><a id="share_tw" href="https://twitter.com/intent/tweet?text=<?php echo $_share; ?>" title="<?php yourls_e( 'Tweet this!' ); ?>" onclick="share('tw');return false">Twitter</a></li>
+					<li><a id="share_fb" href="https://www.facebook.com/share.php?u=<?php echo $_url; ?>" title="<?php yourls_e( 'Share on Facebook' ); ?>" onclick="share('fb');return false;">Facebook</a></li>
+				</ul>
 				<?php
 				yourls_do_action( 'share_links', $longurl, $shorturl, $title, $text );
 				// Note: on the main admin page, there are no parameters passed to the sharebox when it's drawn.
 				?>
-			</p>
 		</div>
-
 		<?php yourls_do_action( 'shareboxes_after', $longurl, $shorturl, $title, $text ); ?>
-
 	</div>
 
 	<?php

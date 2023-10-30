@@ -87,6 +87,9 @@ table.tblSorter tfoot tr {
 	display:block;
 	margin-bottom:10px;
 }
+.navigation .nav_link {
+	display: inline-block;
+}
 .navigation .nav_link a, .navigation .nav_current {
 	border:1px solid #CDCDCD;
 	margin:0px 2px;
@@ -94,7 +97,6 @@ table.tblSorter tfoot tr {
 	background:#fff;
 	text-align:center;
 	min-width:15px;
-	display:inline-block;
 }
 .navigation .nav_current {
 	border:0px;
@@ -110,4 +112,8 @@ table.tblSorter tfoot tr {
 	border:1px solid #BCD9E8;
 	background:#BCD9E8;
 	text-decoration:none;
+}
+.navigation ul {
+	display: block;
+	list-style-type: none;
 }
