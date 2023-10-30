@@ -100,6 +100,13 @@ input.text:focus, textarea:focus {
 tr.edit-row  td {
 	background:#e3f3ff !important;
 }
+tr.edit-row  input.long {
+	max-width: 400px;
+	width: 50%;
+}
+tr.edit-row  input.short {
+	max-width: 75px;
+}
 #new_url {
 	text-align:center;
 	padding:1px;
@@ -113,6 +120,9 @@ tr.edit-row  td {
 }
 #new_url_form {
 	padding:4px;
+}
+#new_url_form #add-keyword {
+	max-width: 70px;
 }
 #new_url #feedback {
 	background:#ff8;

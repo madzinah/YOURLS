@@ -6,6 +6,7 @@ table.tblSorter {
 	font-size: 8pt;
 	width: 100%;
 	text-align: left;
+	border-spacing: 1px;
 }
 table.tblSorter thead tr th, table.tblSorter tfoot tr th, table.tblSorter th.header {
 	background-color: #C7E7FF;
@@ -77,6 +78,12 @@ table.tblSorter tfoot tr {
 }
 #filter_buttons{
 	float:right;
+}
+#filter_options input[name="perpage"] {
+	max-width: 30px;
+}
+#filter_options input[name="click_limit"] {
+	max-width: 40px;
 }
 #pagination{
 	text-align:right;

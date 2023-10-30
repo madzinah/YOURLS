@@ -5,6 +5,9 @@
 #shareboxes{
 	margin-top:15px;
 }
+#shareboxes #copylink {
+	width: 100%;
+}
 
 div.share {
 	-moz-border-radius:5px;
