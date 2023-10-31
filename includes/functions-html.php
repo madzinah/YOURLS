@@ -673,7 +673,7 @@ function yourls_table_add_row( $keyword, $url, $title, $ip, $clicks, $timestamp,
  * @return void
  */
 function yourls_table_head() {
-	$start = '<table id="main_table" class="tblSorter" cellpadding="0" cellspacing="1"><thead><tr>'."\n";
+	$start = '<table id="main_table" class="tblSorter"><thead><tr>'."\n";
 	echo yourls_apply_filter( 'table_head_start', $start );
 
 	$cells = yourls_apply_filter( 'table_head_cells', array(
