@@ -192,9 +192,9 @@ function yourls_html_addnew( $url = '', $keyword = '' ) {
 			<form id="new_url_form" action="" method="get">
 				<div>
                     <label for="add-url"><strong><?php yourls_e( 'Enter the URL' ); ?></strong></label>:
-                    <input type="text" id="add-url" name="url" value="<?php echo $url; ?>" class="text" placeholder="https://" />
+                    <input type="text" id="add-url" name="url" title="Expected format : url beginning with https://" value="<?php echo $url; ?>" class="text" placeholder="https://" />
                     <label for="add-keyword"><?php yourls_e( 'Optional '); ?> : <strong><?php yourls_e('Custom short URL'); ?></strong></label>:
-                    <input type="text" id="add-keyword" name="keyword" value="<?php echo $keyword; ?>" class="text" />
+                    <input type="text" id="add-keyword" name="keyword" title="Only lowercase letters and numbers allowed" value="<?php echo $keyword; ?>" class="text" />
                     <?php yourls_nonce_field( 'add_url', 'nonce-add' ); ?>
                     <input type="button" id="add-button" name="add-button" value="<?php yourls_e( 'Shorten The URL' ); ?>" class="button" onclick="add_link();" />
                 </div>
@@ -255,6 +255,9 @@ function yourls_html_tfooter( $params = array() ) {
 						echo "&ndash;\n";
 
 						// Second search control: order by
+						?> 
+						<div role="group" class="group" aria-labelledby="sort_orderlabel"><span id="sort_orderlabel">Order by</span>
+						<?php
 						$_options = array(
 							'keyword'      => yourls__( 'Short URL' ),
 							'url'          => yourls__( 'URL' ),
@@ -271,8 +274,11 @@ function yourls_html_tfooter( $params = array() ) {
 						);
 						$_select2 = yourls_html_select( 'sort_order', $_options, $sort_order, false,  yourls__( 'Sort order' ) );
 						/* //translators: "Order by <criteria dropdown (date, clicks...)> in <order dropdown (Descending or Ascending)>" */
-						yourls_se( 'Order by %1$s %2$s', $_select , $_select2 );
+						yourls_se( '%1$s %2$s', $_select , $_select2 );
 						echo "&ndash;\n";
+						?>
+						</div>
+						<?php
 
 						// Third search control: Show XX rows
 						/* //translators: "Show <text field> rows" */
@@ -281,6 +287,8 @@ function yourls_html_tfooter( $params = array() ) {
 						echo "<br/>\n";
 
 						// Fourth search control: Show links with more than XX clicks
+						?><div role="group" aria-labelledby="click_limitlabel"><span id="click_limitlabel">Show links with</span>
+						<?php
 						$_options = array(
 							'more' => yourls__( 'more' ),
 							'less' => yourls__( 'less' ),
@@ -288,22 +296,25 @@ function yourls_html_tfooter( $params = array() ) {
 						$_select = yourls_html_select( 'click_filter', $_options, $click_filter, false, yourls__( 'Show links with' ) );
 						$_input  = '<input aria-label="' .yourls__( 'Number of clicks' ). '" type="text" name="click_limit" class="text" value="' . $click_limit . '" /> ';
 						/* //translators: "Show links with <more/less> than <text field> clicks" */
-						yourls_se( 'Show links with %1$s than %2$s clicks', $_select, $_input );
+						yourls_se( '%1$s than %2$s clicks', $_select, $_input );
 						echo "<br/>\n";
 
 						// Fifth search control: Show links created before/after/between ...
+						?></div>
+						<div role="group" aria-labelledby="date_filterlabel"><span id="date_filterlabel">Show links created</span>
+						<?php
 						$_options = array(
 							'before'  => yourls__('before'),
 							'after'   => yourls__('after'),
 							'between' => yourls__('between'),
 						);
 						$_select = yourls_html_select( 'date_filter', $_options, $date_filter, false, yourls__('Show links created') );
-						$_input  = '<input aria-label="' .yourls__('Select a date') . '" type="text" name="date_first" id="date_first" class="text" value="' . $date_first . '" />';
+						$_input  = '<input aria-label="' .yourls__('Select a date') . '" title="' .yourls__('Select a date') . '" type="text" name="date_first" id="date_first" class="text" value="' . $date_first . '" />';
 						$_and    = '<span id="date_and"' . ( $date_filter === 'between' ? ' style="display:inline"' : '' ) . '> &amp; </span>';
-						$_input2 = '<input aria-label="' .yourls__('Select an end date') . '" type="text" name="date_second" id="date_second" class="text" value="' . $date_second . '"' . ( $date_filter === 'between' ? ' style="display:inline"' : '' ) . '/>';
+						$_input2 = '<input aria-label="' .yourls__('Select an end date') . '" title="' .yourls__('Select an end date') . '" type="text" name="date_second" id="date_second" class="text" value="' . $date_second . '"' . ( $date_filter === 'between' ? ' style="display:inline"' : '' ) . '/>';
 						/* //translators: "Show links created <before/after/between> <date input> <"and" if applicable> <date input if applicable>" */
-						yourls_se( 'Show links created %1$s %2$s %3$s %4$s', $_select, $_input, $_and, $_input2 );
-						?>
+						yourls_se( '%1$s %2$s %3$s %4$s', $_select, $_input, $_and, $_input2 );
+						?></div>
 
 						<div id="filter_buttons">
 							<input type="submit" id="submit-sort" value="<?php yourls_e('Search'); ?>" class="button primary" />
@@ -380,7 +391,7 @@ function yourls_html_tfooter( $params = array() ) {
 function yourls_html_select( $name, $options, $selected = '', $display = false, $label = '' ) {
     // Allow plugins to filter the options -- see #3262
     $options = yourls_apply_filter( 'html_select_options', $options, $name, $selected, $display, $label );
-	$html = "<select aria-label='$label' name='$name' id='$name'>\n";
+	$html = "<select aria-label='$label' title='$label' name='$name' id='$name'>\n";
 	foreach( $options as $value => $text ) {
 		$html .= "<option value='$value' ";
 		$html .= $selected == $value ? ' selected="selected"' : '';
@@ -408,9 +419,9 @@ function yourls_html_select( $name, $options, $selected = '', $display = false, 
  */
 function yourls_share_box( $longurl, $shorturl, $title = '', $text='', $shortlink_title = '', $share_title = '', $hidden = false ) {
 	if ( $shortlink_title == '' )
-		$shortlink_title = '<h2>' . yourls__( 'Your short link' ) . '</h2>';
+		$shortlink_title = '<h2><label for="copylink">' . yourls__( 'Your short link' ) . '</label></h2>';
 	if ( $share_title == '' )
-		$share_title = '<h2>' . yourls__( 'Quick Share' ) . '</h2>';
+		$share_title = '<h2><label for="tweet_body">' . yourls__( 'Quick Share' ) . '</label></h2>';
 
 	// Allow plugins to short-circuit the whole function
 	$pre = yourls_apply_filter( 'shunt_share_box', false );
@@ -529,7 +540,7 @@ function yourls_table_edit_row( $keyword, $id ) {
 
 	if( $url ) {
 		$return = <<<RETURN
-<tr id="edit-$id" class="edit-row"><td colspan="5" class="edit-row"><strong>%s</strong>:<input type="text" id="edit-url-$id" name="edit-url-$id" value="$safe_url" class="text long" /><br/><strong>%s</strong>: $www<input type="text" id="edit-keyword-$id" name="edit-keyword-$id" value="$safe_keyword" class="text short" /><br/><strong>%s</strong>: <input type="text" id="edit-title-$id" name="edit-title-$id" value="$safe_title" class="text long" /></td><td colspan="1"><input type="button" id="edit-submit-$id" name="edit-submit-$id" value="%s" title="%s" class="button" onclick="edit_link_save('$id');" />&nbsp;<input type="button" id="edit-close-$id" name="edit-close-$id" value="%s" title="%s" class="button" onclick="edit_link_hide('$id');" /><input type="hidden" id="old_keyword_$id" value="$safe_keyword"/><input type="hidden" id="nonce_$id" value="$nonce"/></td></tr>
+<tr id="edit-$id" class="edit-row"><td colspan="5" class="edit-row"><label for="edit-url-$id"><strong>%s</strong></label>:<input type="text" id="edit-url-$id" name="edit-url-$id" value="$safe_url" class="text long" /><br/><label for="edit-keyword-$id"><strong>%s</strong></label>: $www<input type="text" id="edit-keyword-$id" name="edit-keyword-$id" value="$safe_keyword" title="Only lowercase letters and numbers allowed" class="text short" /><br/><label for="edit-title-$id"><strong>%s</strong></label>: <input type="text" id="edit-title-$id" name="edit-title-$id" value="$safe_title" class="text long" /></td><td colspan="1"><input type="button" id="edit-submit-$id" name="edit-submit-$id" value="%s" title="%s" class="button" onclick="edit_link_save('$id');" />&nbsp;<input type="button" id="edit-close-$id" name="edit-close-$id" value="%s" title="%s" class="button" onclick="edit_link_hide('$id');" /><input type="hidden" id="old_keyword_$id" value="$safe_keyword"/><input type="hidden" id="nonce_$id" value="$nonce"/></td></tr>
 RETURN;
 		$return = sprintf( $return, yourls__( 'Long URL' ), yourls__( 'Short URL' ), yourls__( 'Title' ), yourls__( 'Save' ), yourls__( 'Save new values' ), yourls__( 'Cancel' ), yourls__( 'Cancel editing' ) );
 	} else {

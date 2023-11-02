@@ -190,6 +190,9 @@ td.actions .button_stats {
 #main_table tfoot th, #main_table tfoot th div {
 	font-size:10px;
 }
+#main_table tfoot th div.group {
+	display: inline-block;
+}
 .error {
 	color: red;
 	background:#fee;
