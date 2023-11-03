@@ -67,6 +67,7 @@ function toggle_share_fill_boxes( url, shorturl, title ) {
 	$('#tweet_body').val( tweet ).keypress();
 	$('#shareboxes').slideDown( '300', function(){ init_clipboard(); } ); // clipboard re-initialized after slidedown to make sure the invisible Flash element is correctly positionned
 	$('#tweet_body').keypress();
+	$('#copylink').focus();
 }
 
 // Display the edition interface
@@ -76,7 +77,7 @@ function edit_link_display(id) {
 	}
 	add_loading('#actions-'+id+' .button');
 	var keyword = $('#keyword_'+id).val();
-	var nonce = get_var_from_query( $('#edit-button-'+id).attr('href'), 'nonce' );
+	var nonce = get_var_from_query( $('#edit-button-'+id).attr('data-href'), 'nonce' );
 	$.getJSON(
 		ajaxurl,
 		{ action: "edit_display", keyword: keyword, nonce: nonce, id: id },
@@ -97,7 +98,7 @@ function remove_link(id) {
 		return;
 	}
 	var keyword = $('#keyword_'+id).val();
-	var nonce = get_var_from_query( $('#delete-button-'+id).attr('href'), 'nonce' );
+	var nonce = get_var_from_query( $('#delete-button-'+id).attr('data-href'), 'nonce' );
 	$.getJSON(
 		ajaxurl,
 		{ action: "delete", keyword: keyword, nonce: nonce, id: id },
@@ -130,6 +131,7 @@ function edit_link_hide(id) {
 	$("#edit-" + id).fadeOut(200, function(){
         $("#edit-" + id).remove();
 		end_disable('#actions-'+id+' .button');
+		$('#edit-button-' + id).focus();
 	});
 }
 
@@ -162,6 +164,7 @@ function edit_link_save(id) {
 				});
 				$('#keyword_'+id).val( newkeyword );
 				$('#statlink-'+id).attr( 'href', data.url.shorturl+'+' );
+				$('#edit-button-' + id).focus();
 			}
 			feedback(data.message, data.status);
 			end_loading("#edit-close-" + id);

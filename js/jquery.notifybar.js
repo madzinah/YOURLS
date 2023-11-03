@@ -74,7 +74,7 @@ jQuery.notifyBar = function(settings) {
     
     // Style close button in CSS file
     if( notifyBarNS.close) {
-      bar.append(jQuery("<a href='#' class='notify-bar-close'>Close [X]</a>"));
+      bar.append(jQuery("<button href='#' class='notify-bar-close'>Close [X]</button>"));
       jQuery(".notify-bar-close").click(function() {
         if( bar.attr("id") == "__notifyBar") {
           jQuery("#" + id).slideUp(asTime, function() { jQuery("#" + id).remove() });

@@ -595,18 +595,18 @@ function yourls_table_add_row( $keyword, $url, $title, $ip, $clicks, $timestamp,
 			'onclick' => "toggle_share('$id');return false;",
 		),
 		'edit' => array(
-			'href'    => $edit_link,
-			'id'      => "edit-button-$id",
-			'title'   => yourls_esc_attr__( 'Edit' ),
-			'anchor'  => yourls__( 'Edit' ),
-			'onclick' => "edit_link_display('$id');return false;",
+			'data-href' => $edit_link,
+			'id'        => "edit-button-$id",
+			'title'     => yourls_esc_attr__( "New table line to edit '$keyword'" ),
+			'anchor'    => yourls__( 'Edit' ),
+			'onclick'   => "edit_link_display('$id');return false;",
 		),
 		'delete' => array(
-			'href'    => $delete_link,
-			'id'      => "delete-button-$id",
-			'title'   => yourls_esc_attr__( 'Delete' ),
-			'anchor'  => yourls__( 'Delete' ),
-			'onclick' => "remove_link('$id');return false;",
+			'data-href' => $delete_link,
+			'id'        => "delete-button-$id",
+			'title'     => yourls_esc_attr__( 'Delete' ),
+			'anchor'    => yourls__( 'Delete' ),
+			'onclick'   => "remove_link('$id');return false;",
 		)
 	);
 	$actions = yourls_apply_filter( 'table_add_row_action_array', $actions, $keyword );
@@ -615,9 +615,16 @@ function yourls_table_add_row( $keyword, $url, $title, $ip, $clicks, $timestamp,
 	$action_links = '';
 	foreach( $actions as $key => $action ) {
 		$onclick = isset( $action['onclick'] ) ? 'onclick="' . $action['onclick'] . '"' : '' ;
-		$action_links .= sprintf( '<a href="%s" id="%s" title="%s" class="%s" %s>%s</a>',
-			$action['href'], $action['id'], $action['title'], 'button button_'.$key, $onclick, $action['anchor']
-		);
+		if ($action['href'] == '') {
+			$action_links .= sprintf( '<button data-href="%s" id="%s" title="%s" class="%s" %s>%s</button>',
+				$action['data-href'], $action['id'], $action['title'], 'button button_'.$key, $onclick, $action['anchor']
+			);
+		} else {
+			$action_links .= sprintf( '<a href="%s" id="%s" title="%s" class="%s" %s>%s</a>',
+				$action['href'], $action['id'], $action['title'], 'button button_'.$key, $onclick, $action['anchor']
+			);
+		}
+		
 	}
 	$action_links = yourls_apply_filter( 'action_links', $action_links, $keyword, $url, $ip, $clicks, $timestamp );
 
