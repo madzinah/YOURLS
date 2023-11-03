@@ -31,8 +31,10 @@ function html_pulse( el, newtext ){
 function feedback(msg, type, delay) {
 	closeme = ( type == 'fail' || type == 'error' ) ? true : false;		
 	delay = delay || ( closeme == true ? 10000 : 3500 );
+	alerttype = closeme ? 'alert' : 'status';
+	message = '<span role="'+alerttype+'">'+msg+'</span>';
 	$.notifyBar({
-		html: '<span>'+msg+'</span>',
+		html: message,
 		delay: delay,
 		animationSpeed: "normal",
 		close: closeme,
